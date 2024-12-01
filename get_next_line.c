@@ -5,62 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/30 14:24:37 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/11/30 17:39:07 by ael-azha         ###   ########.fr       */
+/*   Created: 2024/12/01 13:32:52 by ael-azha          #+#    #+#             */
+/*   Updated: 2024/12/01 16:57:47 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
-static char *ft_read_file(int fd)
+char	*ft_free(char *buffer, char *buf)
 {
-	static int count = 1;
-	int	byte_read;
-	char	*buffer;
+	char	*temp;
 
-	printf ("ft_calloc[%d]--->", count++);
-	buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
+}
+
+char	ft_read_file(int fd, char *buffer)
+{
+	char	*holder;
+	int		byte_read;
+
 	if (!buffer)
-		return (NULL);
-	byte_read = read(fd, buffer, BUFFER_SIZE);
-	print_newline(buffer);
-	if (byte_read <= 0)
-		return (free(buffer), NULL);
+		ft_calloc(1, 1);
+	holder = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	byte_read = 1;
+	while (byte_read > 0)
+	{
+		byte_read = read(fd, holder, BUFFER_SIZE);
+		if (byte_read == -1)
+		{
+			free(holder);
+			return (NULL);
+		}
+		holder[byte_read] = 0;
+		buffer = ft_free(holder, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break;
+	}
+	free(holder);
 	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	char	*buffer_read;
+	static char	*buffer;
+	char		*line;
 
-	buffer_read = ft_read_file(fd);
-	return (buffer_read);
-}
-
-int main(void)
-{
-	int	fd;
-	char	*next_line;
-	int	count;
-
-	count = 0;
-	fd = open("example.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf ("file not found\n");
-		return (1);
-	}
-	while (1)
-	{
-		next_line = get_next_line(fd);
-		if (next_line == NULL)
-			break ;
-		count++;
-		printf("[%d]:%s\n", count, next_line);
-		free(next_line);
-		next_line = NULL;
-	}
-	close(fd);
-	return (0);
+	if (!fd || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = ft_read_file(fd, buffer);
 }

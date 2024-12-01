@@ -6,20 +6,19 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:24:17 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/11/30 17:46:59 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/01 16:41:17 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE
+#ifndef GET_NEXT_LINE && BUFFER_SIZE
 # define GET_NEXT_LINE
 # define BUFFER_SIZE 1024
 
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
+# include <fcntl.h> 
 
 char    *get_next_line(int fd);
 char	*ft_strdup(const char *s1);
