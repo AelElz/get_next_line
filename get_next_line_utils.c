@@ -6,7 +6,7 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:36:45 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/01 18:07:41 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:31:37 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*ptr;
 	char	*new;
 
-	if (!s1)
-		s1 = "";
-	if (!s2)
-		s2 = "";
+	if (!s1 || !s2)
+		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	new = (char *)malloc((len1 + len2 + 1) * sizeof(char));
