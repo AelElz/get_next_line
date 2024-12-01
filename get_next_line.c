@@ -6,7 +6,7 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 13:32:52 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/01 18:10:27 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:11:31 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,23 +111,4 @@ char	*get_next_line(int fd)
 	line = ft_line(buffer);
 	buffer = ft_next_line(buffer);
 	return (line);
-}
-int main()
-{
-    int fd;
-    char *line;
-
-    fd = open("test.txt", O_RDONLY);
-    if (fd == -1)
-	{
-        perror("Failed to open file");
-        return 1;
-    }
-	while ((line = get_next_line(fd)) != NULL)
-	{
-        printf("%s", line);
-        free(line);
-	}
-    close(fd);
-    return 0;
 }
