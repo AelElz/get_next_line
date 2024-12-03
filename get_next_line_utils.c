@@ -6,13 +6,13 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:36:45 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/01 18:31:37 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:14:17 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
+void	my_bzero(void *s, size_t n)
 {
 	unsigned char	*ptr;
 
@@ -25,7 +25,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t count, size_t size)
+void	*my_calloc(size_t count, size_t size)
 {
 	void	*new;
 	size_t	total_size;
@@ -36,11 +36,11 @@ void	*ft_calloc(size_t count, size_t size)
 	new = malloc(total_size);
 	if (!new)
 		return (NULL);
-	ft_bzero(new, total_size);
+	my_bzero(new, total_size);
 	return (new);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*my_strchr(const char *s, int c)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	my_strlen(const char *s)
 {
 	size_t	i;
 
@@ -66,7 +66,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*my_strjoin(char const *s1, char const *s2)
 {
 	size_t	len1;
 	size_t	len2;
@@ -75,8 +75,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = my_strlen(s1);
+	len2 = my_strlen(s2);
 	new = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!new)
 		return (NULL);

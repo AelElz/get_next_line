@@ -6,28 +6,29 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:43:13 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/01 18:51:32 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:59:49 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS
-# define GET_NEXT_LINE_BONUS
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <limits.h>
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
+# include <stdio.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <stddef.h>
 
-char    *get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-size_t  ft_strlen(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t count, size_t size);
+char	*get_next_line(int fd);
+void	my_bzero(void *s, size_t n);
+void	*my_calloc(size_t count, size_t size);
+char	*my_strchr(const char *s, int c);
+size_t	my_strlen(const char *s);
+char	*my_strjoin(char const *s1, char const *s2);
 
 #endif
