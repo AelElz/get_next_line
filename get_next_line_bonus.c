@@ -6,7 +6,7 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:42:37 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/04 16:06:15 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/06 08:47:47 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,14 @@ static char	*ft_read_file(int fd, char *buffer)
 		buffer = my_calloc(1, 1);
 	holder = my_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!holder)
-		return (NULL);
+		return (free(buffer), NULL);
 	byte_read = 1;
 	while (byte_read > 0)
 	{
 		byte_read = read(fd, holder, BUFFER_SIZE);
 		if (byte_read == -1)
-		{
-			free(holder);
-			return (NULL);
-		}
-		holder[byte_read] = 0;
+			return (free(holder), free(buffer), NULL);
+		holder[byte_read] = '\0';
 		buffer = ft_join(buffer, holder);
 		if (my_strchr(holder, '\n'))
 			break ;
@@ -76,7 +73,7 @@ static char	*ft_next_line(char *buffer)
 {
 	int		i;
 	int		j;
-	char	*line;
+	char	*new_buffer;
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -86,8 +83,8 @@ static char	*ft_next_line(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = my_calloc(my_strlen(buffer) - i + 1, sizeof(char));
-	if (!line)
+	new_buffer = my_calloc(my_strlen(buffer) - i, sizeof(char));
+	if (!new_buffer)
 	{
 		free(buffer);
 		return (NULL);
@@ -95,9 +92,9 @@ static char	*ft_next_line(char *buffer)
 	i++;
 	j = 0;
 	while (buffer[i])
-		line[j++] = buffer[i++];
+		new_buffer[j++] = buffer[i++];
 	free(buffer);
-	return (line);
+	return (new_buffer);
 }
 
 char	*get_next_line(int fd)
@@ -105,7 +102,7 @@ char	*get_next_line(int fd)
 	static char	*buffer[1024];
 	char		*line;
 
-	if (!fd || fd >= 1024 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	buffer[fd] = ft_read_file(fd, buffer[fd]);
 	if (!buffer[fd])
