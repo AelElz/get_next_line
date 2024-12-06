@@ -6,7 +6,7 @@
 /*   By: ael-azha <ael-azha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 13:32:52 by ael-azha          #+#    #+#             */
-/*   Updated: 2024/12/05 17:45:29 by ael-azha         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:54:21 by ael-azha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static char	*ft_read_file(int fd, char *buffer)
 
 	if (!buffer)
 		buffer = my_calloc(1, 1);
-	holder = my_calloc(BUFFER_SIZE + 1, sizeof(char));
+	holder = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!holder)
-		return (free(buffer), NULL);
+		return (free(buffer),NULL);
 	byte_read = 1;
 	while (byte_read > 0)
 	{
@@ -57,6 +57,8 @@ static char	*ft_line(char *buffer)
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	line = my_calloc(i + 2, sizeof(char));
+	if (!line)
+		return (free(buffer), NULL);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 	{
@@ -102,7 +104,7 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);
 	if (!buffer)
